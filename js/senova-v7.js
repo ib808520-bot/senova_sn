@@ -1,0 +1,14 @@
+
+(()=>{const $=id=>document.getElementById(id),CK='senova_v7_cart',OK='senova_v7_orders';let cart=JSON.parse(localStorage.getItem(CK)||'[]'),chosen=null;
+const money=n=>new Intl.NumberFormat('fr-FR').format(+n||0)+' FCFA';
+function msg(t){let e=$('v7-message');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2400)}
+function product(c){let d=c.dataset,i=c.querySelector('img');return{id:d.id||d.name||c.textContent.trim().slice(0,30),name:d.name||c.querySelector('h2,h3,.product-name')?.textContent.trim()||'Produit',price:+((d.price||c.querySelector('.price')?.textContent||'0').replace(/[^0-9]/g,'')),image:d.image||i?.src||'',description:d.description||c.querySelector('.description')?.textContent.trim()||'Description non renseignée',stock:+(d.stock||1)}}
+function open(p){chosen=p;$('v7-image').src=p.image;$('v7-name').textContent=p.name;$('v7-price').textContent=money(p.price);$('v7-description').textContent=p.description;$('v7-stock').textContent='Stock : '+p.stock;$('v7-product-modal').classList.add('open')}
+function draw(){let b=$('v7-cart-items');b.innerHTML='';if(!cart.length)b.textContent='Votre panier est vide.';cart.forEach((p,i)=>{let d=document.createElement('p');d.textContent=p.name+' × '+p.qty+' — '+money(p.price*p.qty);let x=document.createElement('button');x.textContent='Retirer';x.onclick=()=>{cart.splice(i,1);store()};d.append(x);b.append(d)});$('v7-cart-total').textContent=money(cart.reduce((s,p)=>s+p.price*p.qty,0))}
+function store(){localStorage.setItem(CK,JSON.stringify(cart));draw()}
+document.addEventListener('click',e=>{let c=e.target.closest('.product-card,.product-item,[data-product]');if(c&&!e.target.closest('a,button'))open(product(c));if(e.target.closest('#v7-cart-open,[data-v7-cart]'))$('v7-cart').classList.toggle('open');if(e.target.dataset.close==='product')$('v7-product-modal').classList.remove('open');if(e.target.dataset.close==='checkout')$('v7-checkout-modal').classList.remove('open')});
+$('v7-cart-close').onclick=()=>$('v7-cart').classList.remove('open');
+$('v7-add').onclick=()=>{if(chosen){let p=cart.find(x=>x.id===chosen.id);if(p)p.qty++;else cart.push({...chosen,qty:1});store();msg('Produit ajouté au panier.')} $('v7-product-modal').classList.remove('open')};
+$('v7-checkout-open').onclick=()=>{if(!cart.length)return msg('Votre panier est vide.');$('v7-checkout-modal').classList.add('open')};
+$('v7-checkout-form').onsubmit=e=>{e.preventDefault();let orders=JSON.parse(localStorage.getItem(OK)||'[]');let order={ref:'SNV-'+Date.now().toString().slice(-7),date:new Date().toLocaleString('fr-FR'),buyer:Object.fromEntries(new FormData(e.target)),items:cart,total:cart.reduce((s,p)=>s+p.price*p.qty,0)};orders.unshift(order);localStorage.setItem(OK,JSON.stringify(orders));cart=[];store();e.target.reset();$('v7-checkout-modal').classList.remove('open');msg('Commande démo enregistrée : '+order.ref)};
+draw()})();

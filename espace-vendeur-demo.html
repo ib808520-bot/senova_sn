@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Espace vendeur — SENOVA</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<div class="topbar"><div class="wrap topbar-row"><span>🇸🇳 Sénégal</span><span>Votre espace vendeur</span><div class="top-right"><a href="index.html">Voir la marketplace</a></div></div></div>
+<header class="header"><div class="wrap header-row"><a class="logo" href="index.html"><span class="logo-symbol">🛒</span><span class="logo-copy"><strong>SENOVA</strong><small>Le Sénégal achète, vend et avance.</small></span></a></div></header>
+<section class="page-hero"><div class="wrap"><h1>Espace vendeur — démonstration</h1><p>Ajoutez des produits à votre boutique. Dans la version réelle, cet espace sera réservé aux vendeurs dont le compte a été validé.</p></div></section>
+<main class="wrap">
+<div class="form-panel">
+<div class="notice"><strong>Mode démonstration :</strong> cette page n'est pas protégée par une vraie connexion. N'y saisissez pas de données sensibles. La validation des vendeurs et les droits d'accès seront sécurisés côté serveur dans la prochaine étape.</div>
+<h2>Publier un produit</h2>
+<form id="productForm" class="form-grid">
+<div class="field"><label for="shop">Nom de la boutique *</label><input id="shop" required maxlength="80" placeholder="Ma boutique"></div>
+<div class="field"><label for="name">Nom du produit *</label><input id="name" required maxlength="90" placeholder="Ex. Sac à dos"></div>
+<div class="field"><label for="price">Prix en FCFA *</label><input id="price" required type="number" min="1" max="100000000" placeholder="15000"></div>
+<div class="field"><label for="category">Catégorie *</label><select id="category" required><option value="">Choisir</option><option>Électronique</option><option>Téléphones</option><option>Mode</option><option>Maison</option><option>Électroménager</option><option>Sport</option><option>Enfants</option><option>Alimentation</option></select></div>
+<div class="field full"><label for="image">Lien de la photo du produit (facultatif)</label><input id="image" type="url" maxlength="500" placeholder="https://..."><small class="help-text">Utilisez un lien d’image public commençant par https://</small></div>
+<div class="field full"><label for="emoji">Icône illustrative (facultatif)</label><select id="emoji"><option>📦</option><option>📱</option><option>👕</option><option>👟</option><option>💻</option><option>🛋️</option><option>⚽</option><option>🧸</option></select></div>
+<div class="field full"><button class="yellow-button" type="submit">Publier le produit →</button></div>
+<label>Description du produit<textarea name="description" required></textarea></label><label>Quantité disponible<input name="stock" type="number" min="0" value="1" required></label></form>
+<p id="productResult" class="help-text" role="status"></p>
+</div>
+<section class="section"><div class="section-title"><h2>Mes produits de démonstration</h2><a href="index.html#produits">Voir sur l'accueil →</a></div><div id="myProducts" class="products-grid"></div></section>
+</main>
+<footer><div class="wrap footer-row"><a class="footer-logo" href="index.html">SENOVA</a><span>Le Sénégal achète, vend et avance.</span><span>© 2026 SENOVA</span></div></footer>
+<script>
+const KEY="senova_demo_products", form=document.querySelector("#productForm"), result=document.querySelector("#productResult"), list=document.querySelector("#myProducts");
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){const items=JSON.parse(localStorage.getItem(KEY)||"[]");list.innerHTML=items.map((p,i)=>`<article class="product-card"><div class="product-image">${p.image?`<img src="${safe(p.image)}" alt="${safe(p.name)}">`:`<div class="seller-emoji">${safe(p.emoji||"📦")}</div>`}</div><div class="product-details"><h3>${safe(p.name)}</h3><p>${safe(p.shop)} · ${safe(p.category)}</p><div class="product-bottom"><span class="product-price">${new Intl.NumberFormat("fr-FR").format(p.price)} FCFA</span><button class="add-cart" data-remove="${i}">Supprimer</button></div></div></article>`).join("")||'<p class="help-text">Aucun produit ajouté pour le moment.</p>';}
+form.addEventListener("submit",e=>{e.preventDefault();const image=form.image.value.trim();if(image && !/^https:\/\//i.test(image)){result.textContent="Le lien de l’image doit commencer par https://";return;}const item={shop:form.shop.value.trim(),name:form.name.value.trim(),price:Number(form.price.value),category:form.category.value,emoji:form.emoji.value,image};const items=JSON.parse(localStorage.getItem(KEY)||"[]");items.push(item);localStorage.setItem(KEY,JSON.stringify(items));form.reset();result.textContent="Produit ajouté à la démonstration. Il apparaîtra sur l'accueil ouvert dans ce même navigateur.";render();});
+list.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(!b)return;const items=JSON.parse(localStorage.getItem(KEY)||"[]");items.splice(Number(b.dataset.remove),1);localStorage.setItem(KEY,JSON.stringify(items));render();});
+render();
+</script>
+</body></html>

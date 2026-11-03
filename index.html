@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#08264b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="description" content="SENOVA, la marketplace sénégalaise : achetez et vendez en ligne.">
+  <title>SENOVA — Le Sénégal achète, vend et avance.</title>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js" defer></script>
+  <script src="js/pwa.js" defer></script>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap topbar-row">
+      <span class="top-item"><b class="pin">●</b> Sénégal</span>
+      <span class="top-item delivery-top">🚚 Livraison partout au Sénégal</span>
+      <div class="top-right"><a href="#aide">Besoin d'aide ?</a><a href="tel:+221771234567">☎ +221 77 123 45 67</a><a href="#connexion">Connexion / Inscription</a></div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="wrap header-row">
+      <a class="logo" href="#" aria-label="SENOVA accueil">
+        <span class="logo-symbol"><span>🛒</span></span>
+        <span class="logo-copy"><strong>SENOVA</strong><small>Le Sénégal achète, vend et avance.</small></span>
+      </a>
+      <form class="search" id="searchForm">
+        <input id="searchInput" type="search" placeholder="Rechercher un produit..." aria-label="Rechercher un produit">
+        <button aria-label="Rechercher" type="submit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 5 5"></path></svg></button>
+      </form>
+      <div class="header-tools">
+        <a href="#favoris" class="tool" id="openFavorites"><span class="heart">♡</span><small>Favoris <b id="favoriteCount">0</b></small></a>
+        <a href="#panier" class="tool cart-tool" id="openCart"><span class="cart-icon">🛒<i id="cartCount">0</i></span><small>Panier</small></a>
+      </div>
+    </div>
+  </header>
+
+  <nav class="navigation">
+    <div class="wrap nav-row">
+      <a class="all-categories" href="#categories">☷ <span>Toutes les catégories</span>⌄</a>
+      <a class="nav-link current" href="#">⌂ <span>Accueil</span></a>
+      <a class="nav-link" href="#boutiques">▣ <span>Boutiques</span></a>
+      <a class="nav-link" href="#promotions">🔥 <span>Promotions</span></a>
+      <a class="nav-link" href="inscription-vendeur.html">▧ <span>Devenir vendeur</span></a>
+      <a class="nav-link" href="compte-client.html">♙ <span>Mon compte</span></a>
+      <a class="nav-link" href="#apropos">● <span>À propos</span></a>
+      <a class="nav-link" href="#contact">✉ <span>Contact</span></a>
+      <a class="nav-link" href="admin-demo.html">⚙ <span>Administration</span></a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="hero-photo"></div>
+      <div class="wrap hero-inner">
+        <div class="senegal-flag" aria-label="Drapeau du Sénégal"><span></span><b>★</b><span></span></div>
+        <div class="hero-text">
+          <h1>SENOVA</h1>
+          <h2>Le Sénégal achète, vend et avance.</h2>
+          <p>Une marketplace 100% sénégalaise<br>pour acheter, vendre et grandir ensemble.</p>
+          <a class="yellow-button" href="#produits">Découvrir maintenant <span>→</span></a>
+        </div>
+        <aside class="hero-benefits">
+          <div><span>♧</span><p><strong>Achetez</strong><small>en toute confiance</small></p></div>
+          <div><span>▤</span><p><strong>Vendez facilement</strong><small>votre boutique</small></p></div>
+          <div><span>🚚</span><p><strong>Recevez partout</strong><small>au Sénégal</small></p></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap section categories-section" id="categories">
+      <div class="section-title"><h2>Nos catégories</h2><a href="#produits">Voir toutes <span>→</span></a></div>
+      <div class="category-list">
+        <button class="category-card" data-category="Électronique"><img src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=400&q=80" alt=""><strong>Électronique</strong></button>
+        <button class="category-card" data-category="Téléphones"><img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=400&q=80" alt=""><strong>Téléphones</strong></button>
+        <button class="category-card" data-category="Mode"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=400&q=80" alt=""><strong>Mode & Beauté</strong></button>
+        <button class="category-card" data-category="Maison"><img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=400&q=80" alt=""><strong>Maison & Déco</strong></button>
+        <button class="category-card" data-category="Électroménager"><img src="https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=400&q=80" alt=""><strong>Électroménager</strong></button>
+        <button class="category-card" data-category="Sport"><img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=400&q=80" alt=""><strong>Sport & Loisirs</strong></button>
+        <button class="category-card" data-category="Enfants"><img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=400&q=80" alt=""><strong>Enfants</strong></button>
+        <button class="category-card" data-category="Alimentation"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=400&q=80" alt=""><strong>Alimentation</strong></button>
+      </div>
+    </section>
+
+    <section class="wrap section products-section" id="produits">
+      <div class="section-title"><h2>Produits populaires</h2><button id="clearFilter">Voir toutes <span>→</span></button></div>
+      <p class="demo-note">Exemples de présentation. Les produits publiés par les vendeurs apparaîtront ici après connexion à la base de données.</p>
+      <div class="products-grid" id="productGrid"></div>
+      <div class="products-grid" id="sellerProductGrid" aria-live="polite"></div>
+      <p class="empty" id="emptyState" hidden>Aucun produit trouvé. Essayez une autre recherche.</p>
+    </section>
+
+    <section class="wrap section v4-shortcuts"><div class="section-title"><h2>Votre espace SENOVA</h2></div><div class="shortcut-grid"><a class="shortcut-card" href="compte-client.html"><span>♙</span><strong>Espace client</strong><small>Favoris et commandes</small></a><a class="shortcut-card" href="espace-vendeur-demo.html"><span>▤</span><strong>Espace vendeur</strong><small>Produits et boutique</small></a><a class="shortcut-card" href="admin-demo.html"><span>⚙</span><strong>Administration</strong><small>Gestion de la plateforme</small></a></div></section>
+    <section class="seller-strip" id="vendre">
+      <div class="wrap seller-content">
+        <div><small>VOUS ÊTES VENDEUR ?</small><h2>Faites découvrir vos produits sur SENOVA.</h2><p>Créez votre boutique et gérez vos ventes en ligne.</p></div>
+        <a class="yellow-button" href="inscription-vendeur.html">Devenir vendeur →</a>
+      </div>
+    </section>
+  </main>
+
+  <section class="buyer-benefits"><div class="wrap buyer-benefit-grid"><div>🚚 <strong>Livraison au Sénégal</strong><small>Selon la boutique et la zone</small></div><div>🔒 <strong>Achats plus sereins</strong><small>Informations claires avant commande</small></div><div>💬 <strong>Aide aux acheteurs</strong><small>Un espace pour vos questions</small></div><div>♡ <strong>Vos favoris</strong><small>Retrouvez les produits aimés</small></div></div></section>
+  <footer id="contact"><div class="wrap footer-row"><a class="footer-logo" href="#">SENOVA</a><span>Le Sénégal achète, vend et avance.</span><span>© <span id="year"></span> SENOVA</span></div></footer>
+
+  <dialog id="infoDialog"><button class="close" id="closeDialog">×</button><h2>SENOVA arrive bientôt</h2><p>Cette version présente le design et les premières interactions. Les comptes vendeurs, les commandes et les paiements seront ajoutés dans les prochaines versions.</p><button class="yellow-button" id="okDialog">Compris</button></dialog>
+  <dialog id="buyerDialog" class="buyer-dialog"><button class="close" id="closeBuyer">×</button><h2 id="buyerDialogTitle">Mon panier</h2><div id="buyerDialogContent"></div><div class="buyer-dialog-actions"><button class="secondary-button" id="continueShopping">Continuer mes achats</button><button class="yellow-button" id="checkoutDemo">Valider ma demande</button></div><p class="help-text">Démo : aucune commande ni aucun paiement réel ne sera effectué.</p></dialog>
+
+<div id="v7-product-modal" class="v7-modal"><div class="v7-dialog">
+<button type="button" class="v7-close" data-close="product">×</button><img id="v7-image" alt="Produit">
+<h2 id="v7-name"></h2><p id="v7-price"></p><p id="v7-description"></p><p id="v7-stock"></p>
+<button id="v7-add" class="v7-btn" type="button">Ajouter au panier</button></div></div>
+<div id="v7-cart" class="v7-cart"><b>Mon panier</b><button id="v7-cart-close">×</button>
+<div id="v7-cart-items">Panier vide</div><p>Total : <strong id="v7-cart-total">0 FCFA</strong></p>
+<button id="v7-checkout-open" class="v7-btn">Continuer</button></div>
+<div id="v7-checkout-modal" class="v7-modal"><form id="v7-checkout-form" class="v7-dialog">
+<button type="button" class="v7-close" data-close="checkout">×</button><h2>Livraison</h2>
+<label>Nom complet<input name="name" required></label><label>Téléphone<input name="phone" required></label>
+<label>Ville / quartier<input name="city" required></label><label>Adresse<textarea name="address" required></textarea></label>
+<p class="v7-note">Démo uniquement : aucun paiement réel.</p><button class="v7-btn">Confirmer la commande (démo)</button>
+</form></div><div id="v7-message"></div>
+<link rel="stylesheet" href="css/senova-v7.css"><script src="js/senova-v7.js"></script>
+</body>
+</html>

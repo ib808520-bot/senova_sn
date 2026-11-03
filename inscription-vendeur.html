@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Devenir vendeur — SENOVA</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<div class="topbar"><div class="wrap topbar-row"><span>🇸🇳 Sénégal</span><span>🚚 Marketplace sénégalaise</span><div class="top-right"><a href="index.html">Retour à l'accueil</a></div></div></div>
+<header class="header"><div class="wrap header-row"><a class="logo" href="index.html"><span class="logo-symbol">🛒</span><span class="logo-copy"><strong>SENOVA</strong><small>Le Sénégal achète, vend et avance.</small></span></a></div></header>
+<section class="page-hero"><div class="wrap"><h1>Ouvrez votre boutique sur SENOVA</h1><p>Envoyez votre demande. Notre équipe vérifiera les informations avant d'activer votre espace vendeur.</p></div></section>
+<main class="wrap">
+<form class="form-panel" id="sellerForm">
+<h2>Demande d'inscription vendeur</h2>
+<p class="help-text">Renseignez des informations exactes pour que l'équipe SENOVA puisse vous contacter.</p>
+<div class="form-grid">
+<div class="field"><label for="owner">Nom et prénom *</label><input id="owner" name="owner" required maxlength="80" placeholder="Votre nom"></div>
+<div class="field"><label for="shop">Nom de la boutique *</label><input id="shop" name="shop" required maxlength="80" placeholder="Ex. Boutique Awa"></div>
+<div class="field"><label for="phone">Téléphone *</label><input id="phone" name="phone" required type="tel" maxlength="25" placeholder="+221 ..."></div>
+<div class="field"><label for="city">Ville / commune *</label><input id="city" name="city" required maxlength="60" placeholder="Ex. Dakar, Thiès..."></div>
+<div class="field full"><label for="category">Catégorie principale *</label><select id="category" name="category" required><option value="">Choisir une catégorie</option><option>Électronique</option><option>Téléphones</option><option>Mode & Beauté</option><option>Maison & Déco</option><option>Électroménager</option><option>Sport & Loisirs</option><option>Enfants</option><option>Alimentation</option><option>Autre</option></select></div>
+<div class="field full"><label for="details">Présentez votre activité</label><textarea id="details" name="details" maxlength="500" placeholder="Quels produits souhaitez-vous vendre ?"></textarea></div>
+</div>
+<div class="notice"><strong>Validation obligatoire :</strong> votre boutique ne sera pas activée immédiatement. L'équipe SENOVA doit d'abord examiner votre demande. Les produits seront ensuite publiés directement par vous depuis votre espace vendeur.</div>
+<button class="yellow-button" type="submit">Envoyer ma demande →</button>
+<div id="formResult" class="help-text" role="status" aria-live="polite" style="margin-top:15px"></div>
+</form>
+</main>
+<footer><div class="wrap footer-row"><a class="footer-logo" href="index.html">SENOVA</a><span>Le Sénégal achète, vend et avance.</span><span>© 2026 SENOVA</span></div></footer>
+<script>
+const form=document.querySelector("#sellerForm"), result=document.querySelector("#formResult");
+form.addEventListener("submit",e=>{
+ e.preventDefault();
+ const data=Object.fromEntries(new FormData(form).entries());
+ const requests=JSON.parse(localStorage.getItem("senova_demo_seller_requests")||"[]");
+ requests.push({...data,submittedAt:new Date().toISOString(),status:"En attente"});
+ localStorage.setItem("senova_demo_seller_requests",JSON.stringify(requests));
+ result.innerHTML='<div class="success-panel"><strong>Demande enregistrée sur cet appareil.</strong><br>Statut : en attente de validation. Cette démonstration ne transmet pas encore votre demande à SENOVA.</div>';
+ form.reset();
+});
+</script>
+</body></html>

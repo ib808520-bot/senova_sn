@@ -1,0 +1,3 @@
+SENOVA V7 — démonstration front-end
+Ajouts : fiche produit (photo, prix, description, stock), panier, formulaire de livraison et enregistrement local de commande.
+Limites : données enregistrées uniquement sur cet appareil. Pas de serveur partagé, pas de notification vendeur, pas de messagerie réelle et aucun paiement réel. Inscription vendeur gratuite.

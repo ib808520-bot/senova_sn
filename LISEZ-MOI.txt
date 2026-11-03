@@ -1,0 +1,12 @@
+SENOVA V6 — AMÉLIORATION DU PARCOURS ACHETEUR
+
+Nouveautés :
+- Recherche instantanée dans le catalogue.
+- Favoris enregistrés sur cet appareil.
+- Panier avec quantités, suppression et total estimé.
+- Espace client affichant les favoris enregistrés.
+- Mise en avant des services acheteurs.
+
+Installation : décompressez le ZIP puis ouvrez index.html dans un navigateur.
+
+IMPORTANT : version de démonstration. Les données sont stockées localement dans le navigateur. Aucun paiement, compte réel, commande envoyée ou synchronisation entre appareils. Les produits exemples ne sont pas des offres réelles.

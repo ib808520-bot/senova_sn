@@ -1,0 +1,11 @@
+{
+  "name": "SENOVA — Marketplace sénégalaise",
+  "short_name": "SENOVA",
+  "description": "Le Sénégal achète, vend et avance.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#08264b",
+  "lang": "fr",
+  "icons": []
+}
