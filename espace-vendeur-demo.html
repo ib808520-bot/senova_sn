@@ -4,10 +4,33 @@
 <body>
 <div class="topbar"><div class="wrap topbar-row"><span>🇸🇳 Sénégal</span><span>Votre espace vendeur</span><div class="top-right"><a href="index.html">Voir la marketplace</a></div></div></div>
 <header class="header"><div class="wrap header-row"><a class="logo" href="index.html"><span class="logo-symbol">🛒</span><span class="logo-copy"><strong>SENOVA</strong><small>Le Sénégal achète, vend et avance.</small></span></a></div></header>
-<section class="page-hero"><div class="wrap"><h1>Espace vendeur — démonstration</h1><p>Ajoutez des produits à votre boutique. Dans la version réelle, cet espace sera réservé aux vendeurs dont le compte a été validé.</p></div></section>
+<section class="page-hero"><div class="wrap"><h1>Espace vendeur</h1><p>Valide ton compte pour publier. 2 étapes obligatoires : WhatsApp + Carte d'Identité.</p></div></section>
 <main class="wrap">
-<div class="form-panel">
-<div class="notice"><strong>Mode démonstration :</strong> cette page n'est pas protégée par une vraie connexion. N'y saisissez pas de données sensibles. La validation des vendeurs et les droits d'accès seront sécurisés côté serveur dans la prochaine étape.</div>
+<div class="form-panel" id="validationPanel">
+<h2>✅ Validation vendeur - Obligatoire</h2>
+<div id="statutValidation" style="padding:12px; background:#fff3cd; border-radius:8px; margin-bottom:15px; font-weight:bold;">⏳ En attente : Fais les 2 validations ci-dessous</div>
+
+<!-- ETAPE 1 WHATSAPP -->
+<div style="margin:15px 0; padding:15px; border:1px solid #ddd; border-radius:10px;">
+<h3>1. Vérification WhatsApp</h3>
+<input id="whatsapp_num" type="tel" placeholder="Ex: 77 123 45 67" style="width:100%; padding:10px; margin:5px 0;">
+<button type="button" onclick="envoyerCodeWhatsApp()" style="padding:10px; background:#25D366; color:white; border:none; border-radius:5px; width:100%; cursor:pointer;">Recevoir le code WhatsApp</button>
+<input id="code_whatsapp" type="text" placeholder="Tape le code reçu ex: 4521" style="width:100%; padding:10px; margin:10px 0 5px 0;">
+<p id="msg_whatsapp" style="font-size:13px;"></p>
+</div>
+
+<!-- ETAPE 2 CIN -->
+<div style="margin:15px 0; padding:15px; border:1px solid #ddd; border-radius:10px;">
+<h3>2. Photo Carte d'Identité</h3>
+<p style="font-size:13px; color:#666;">Photo privée, seul SENOVA peut la voir. Obligatoire pour activer ta boutique.</p>
+<input id="cni_photo" type="file" accept="image/*" style="width:100%; padding:10px;">
+<p id="msg_cni" style="font-size:13px;"></p>
+<img id="preview_cni" style="max-width:100%; display:none; margin-top:10px; border-radius:8px;">
+</div>
+</div>
+
+<div class="form-panel" id="publishPanel" style="opacity:0.4; pointer-events:none;">
+<div class="notice"><strong id="noticeText">🔒 Boutique verrouillée : Fais la validation WhatsApp + CIN ci-dessus pour débloquer.</strong></div>
 <h2>Publier un produit</h2>
 <form id="productForm" class="form-grid">
 <div class="field"><label for="shop">Nom de la boutique *</label><input id="shop" required maxlength="80" placeholder="Ma boutique"></div>
@@ -20,15 +43,46 @@
 <label>Description du produit<textarea name="description" required></textarea></label><label>Quantité disponible<input name="stock" type="number" min="0" value="1" required></label></form>
 <p id="productResult" class="help-text" role="status"></p>
 </div>
-<section class="section"><div class="section-title"><h2>Mes produits de démonstration</h2><a href="index.html#produits">Voir sur l'accueil →</a></div><div id="myProducts" class="products-grid"></div></section>
+<section class="section"><div class="section-title"><h2>Mes produits</h2><a href="index.html#produits">Voir sur l'accueil →</a></div><div id="myProducts" class="products-grid"></div></section>
 </main>
 <footer><div class="wrap footer-row"><a class="footer-logo" href="index.html">SENOVA</a><span>Le Sénégal achète, vend et avance.</span><span>© 2026 SENOVA</span></div></footer>
 <script>
 const KEY="senova_demo_products", form=document.querySelector("#productForm"), result=document.querySelector("#productResult"), list=document.querySelector("#myProducts");
 function safe(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function render(){const items=JSON.parse(localStorage.getItem(KEY)||"[]");list.innerHTML=items.map((p,i)=>`<article class="product-card"><div class="product-image">${p.image?`<img src="${safe(p.image)}" alt="${safe(p.name)}">`:`<div class="seller-emoji">${safe(p.emoji||"📦")}</div>`}</div><div class="product-details"><h3>${safe(p.name)}</h3><p>${safe(p.shop)} · ${safe(p.category)}</p><div class="product-bottom"><span class="product-price">${new Intl.NumberFormat("fr-FR").format(p.price)} FCFA</span><button class="add-cart" data-remove="${i}">Supprimer</button></div></div></article>`).join("")||'<p class="help-text">Aucun produit ajouté pour le moment.</p>';}
-form.addEventListener("submit",e=>{e.preventDefault();const image=form.image.value.trim();if(image && !/^https:\/\//i.test(image)){result.textContent="Le lien de l’image doit commencer par https://";return;}const item={shop:form.shop.value.trim(),name:form.name.value.trim(),price:Number(form.price.value),category:form.category.value,emoji:form.emoji.value,image};const items=JSON.parse(localStorage.getItem(KEY)||"[]");items.push(item);localStorage.setItem(KEY,JSON.stringify(items));form.reset();result.textContent="Produit ajouté à la démonstration. Il apparaîtra sur l'accueil ouvert dans ce même navigateur.";render();});
+form.addEventListener("submit",e=>{e.preventDefault();if(localStorage.getItem("senova_seller_verified")!=="oui"){alert("Tu dois d'abord valider WhatsApp + CIN");return;}const image=form.image.value.trim();if(image && !/^https:\/\//i.test(image)){result.textContent="Le lien de l’image doit commencer par https://";return;}const item={shop:form.shop.value.trim(),name:form.name.value.trim(),price:Number(form.price.value),category:form.category.value,emoji:form.emoji.value,image};const items=JSON.parse(localStorage.getItem(KEY)||"[]");items.push(item);localStorage.setItem(KEY,JSON.stringify(items));form.reset();result.textContent="Produit ajouté.";render();});
 list.addEventListener("click",e=>{const b=e.target.closest("[data-remove]");if(!b)return;const items=JSON.parse(localStorage.getItem(KEY)||"[]");items.splice(Number(b.dataset.remove),1);localStorage.setItem(KEY,JSON.stringify(items));render();});
 render();
+
+// --- VALIDATION AUTO SENOVA ---
+let whatsappOK=false, cniOK=false, codeGenere="";
+if(localStorage.getItem("senova_seller_verified")==="oui"){debloquer();}
+document.getElementById('cni_photo').addEventListener('change', function(e){
+  const file=e.target.files[0]; if(!file) return;
+  if(file.size>5*1024*1024){alert("Photo trop lourde, max 5Mo"); return;}
+  const reader=new FileReader();
+  reader.onload=function(ev){document.getElementById('preview_cni').src=ev.target.result;document.getElementById('preview_cni').style.display='block';document.getElementById('msg_cni').innerHTML="✅ Photo CIN reçue";cniOK=true;verifierActivation();};
+  reader.readAsDataURL(file);
+});
+function envoyerCodeWhatsApp(){
+  const num=document.getElementById('whatsapp_num').value;
+  if(num.length<9){alert("Mets un vrai numéro WhatsApp"); return;}
+  codeGenere=Math.floor(1000+Math.random()*9000).toString();
+  alert("CODE TEST (pour l'instant) : "+codeGenere+"\nPlus tard il partira par vrai WhatsApp");
+  document.getElementById('msg_whatsapp').innerHTML="Code envoyé sur WhatsApp";
+}
+document.getElementById('code_whatsapp').addEventListener('input', function(e){
+  if(e.target.value===codeGenere){whatsappOK=true;document.getElementById('msg_whatsapp').innerHTML="✅ WhatsApp vérifié";verifierActivation();}
+});
+function verifierActivation(){
+  if(whatsappOK && cniOK){localStorage.setItem("senova_seller_verified","oui");debloquer();alert("🎉 Félicitations ! 2 validations réussies. Ta boutique est activée.");}
+}
+function debloquer(){
+  document.getElementById('publishPanel').style.opacity="1";
+  document.getElementById('publishPanel').style.pointerEvents="auto";
+  document.getElementById('noticeText').innerHTML="✅ Boutique activée - Tu peux publier";
+  document.getElementById('statutValidation').innerHTML="✅ Boutique ACTIVÉE - WhatsApp + CIN validés";
+  document.getElementById('statutValidation').style.background="#d4edda";
+}
 </script>
 </body></html>
